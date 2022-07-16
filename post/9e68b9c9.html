@@ -1,0 +1,202 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>剑指 Offer 12. 矩阵中的路径 | Cooyper</title><meta name="keywords" content="Leetcode,剑指offer,回溯法,深度优先遍历,剪枝法"><meta name="author" content="Cooyper"><meta name="copyright" content="Cooyper"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="剑指 Offer 12. 矩阵中的路径题目难度：中等 给定一个 m x n 二维字符网格 board 和一个字符串单词 word 。如果 word 存在于网格中，返回 true ；否则，返回 false 。 单词必须按照字母顺序，通过相邻的单元格内的字母构成，其中“相邻”单元格是那些水平相邻或垂直相邻的单元格。同一个单元格内的字母不允许被重复使用。 例如，在下面的 3×4 的矩阵中包含单词 “AB">
+<meta property="og:type" content="article">
+<meta property="og:title" content="剑指 Offer 12. 矩阵中的路径">
+<meta property="og:url" content="https://cooyper.github.io/post/9e68b9c9.html">
+<meta property="og:site_name" content="Cooyper">
+<meta property="og:description" content="剑指 Offer 12. 矩阵中的路径题目难度：中等 给定一个 m x n 二维字符网格 board 和一个字符串单词 word 。如果 word 存在于网格中，返回 true ；否则，返回 false 。 单词必须按照字母顺序，通过相邻的单元格内的字母构成，其中“相邻”单元格是那些水平相邻或垂直相邻的单元格。同一个单元格内的字母不允许被重复使用。 例如，在下面的 3×4 的矩阵中包含单词 “AB">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cooyper.github.io/img/post/blog012.jpg">
+<meta property="article:published_time" content="2022-07-16T13:02:58.000Z">
+<meta property="article:modified_time" content="2022-07-16T13:12:39.841Z">
+<meta property="article:author" content="Cooyper">
+<meta property="article:tag" content="Leetcode">
+<meta property="article:tag" content="剑指offer">
+<meta property="article:tag" content="回溯法">
+<meta property="article:tag" content="深度优先遍历">
+<meta property="article:tag" content="剪枝法">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cooyper.github.io/img/post/blog012.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://cooyper.github.io/post/9e68b9c9"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: Cooyper","link":"链接: ","source":"来源: Cooyper","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '剑指 Offer 12. 矩阵中的路径',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-07-16 21:12:39'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.2.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">13</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">21</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签页</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 链接</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></li><li><a class="site-page child" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/post/blog012.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Cooyper</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签页</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 链接</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></li><li><a class="site-page child" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></li></ul></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">剑指 Offer 12. 矩阵中的路径</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-07-16T13:02:58.000Z" title="发表于 2022-07-16 21:02:58">2022-07-16</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-07-16T13:12:39.841Z" title="更新于 2022-07-16 21:12:39">2022-07-16</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Leetcode/">Leetcode</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="剑指 Offer 12. 矩阵中的路径"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="剑指-Offer-12-矩阵中的路径"><a href="#剑指-Offer-12-矩阵中的路径" class="headerlink" title="剑指 Offer 12. 矩阵中的路径"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/ju-zhen-zhong-de-lu-jing-lcof/">剑指 Offer 12. 矩阵中的路径</a></h2><h3 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h3><p><strong>难度：中等</strong></p>
+<p>给定一个 m x n 二维字符网格 board 和一个字符串单词 word 。如果 word 存在于网格中，返回 true ；否则，返回 false 。</p>
+<p>单词必须按照字母顺序，通过相邻的单元格内的字母构成，其中“相邻”单元格是那些水平相邻或垂直相邻的单元格。同一个单元格内的字母不允许被重复使用。</p>
+<p>例如，在下面的 3×4 的矩阵中包含单词 “ABCCED”（单词中的字母已标出）。</p>
+<p><img src="https://assets.leetcode.com/uploads/2020/11/04/word2.jpg" alt="img"></p>
+<p><strong>示例 1：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：board = [[&quot;A&quot;,&quot;B&quot;,&quot;C&quot;,&quot;E&quot;],[&quot;S&quot;,&quot;F&quot;,&quot;C&quot;,&quot;S&quot;],[&quot;A&quot;,&quot;D&quot;,&quot;E&quot;,&quot;E&quot;]], word = &quot;ABCCED&quot;</span><br><span class="line">输出：true</span><br></pre></td></tr></table></figure>
+
+<p><strong>示例 2：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：board = [[&quot;a&quot;,&quot;b&quot;],[&quot;c&quot;,&quot;d&quot;]], word = &quot;abcd&quot;</span><br><span class="line">输出：false</span><br></pre></td></tr></table></figure>
+
+<p><strong>提示：</strong></p>
+<ul>
+<li><code>1 &lt;= board.length &lt;= 200</code></li>
+<li><code>1 &lt;= board[i].length &lt;= 200</code></li>
+<li><code>board</code> 和 <code>word</code> 仅由大小写英文字母组成</li>
+</ul>
+<h3 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h3><p>该题是典型的矩阵搜索问题，可考虑使用 <strong>深度优先遍历（DFS） + 剪枝</strong> 的方法。</p>
+<ul>
+<li><strong>深度优先搜索：</strong>暴力遍历矩阵中所有的字符串可能性。DFS 通过递归，先朝一个方向遍历到底，再回溯至上个节点，沿另一个方向搜索，以此类推。</li>
+<li><strong>剪枝：</strong>在搜索过程中，遇到 <strong>这条路不可行</strong> 和 <strong>目标字符串匹配成功</strong> 的情况（例如：此矩阵元素和目标字符不同、此元素已被访问），则立即返回，称之为 <strong>可行性剪枝</strong>。</li>
+</ul>
+<p><img src="https://pic.leetcode-cn.com/1604944042-glmqJO-Picture0.png" alt="Picture0.png"></p>
+<h4 id="DFS-解析"><a href="#DFS-解析" class="headerlink" title="DFS 解析"></a>DFS 解析</h4><ul>
+<li><strong>递归参数：</strong>当前元素在矩阵 <code>board</code> 中的行列索引 <code>i</code> 和 <code>j</code> ，当前目标字符在 <code>word</code> 中的索引 <code>k</code> </li>
+<li><strong>终止条件：</strong><ol>
+<li>返回 <em>false</em> ：<ol>
+<li>下标越界</li>
+<li>当前元素 <code>board[i][j]</code> 不等于 <code>word[k]</code></li>
+<li>当前元素 <code>board[i][j]</code> 已被访问（可与2合并）</li>
+</ol>
+</li>
+<li>返回 <em>true</em> ：<code>k == word.size() - 1</code>，即 <code>word</code> 已全部匹配。</li>
+</ol>
+</li>
+<li><strong>递推工作：</strong><ol>
+<li>标记当前元素 <code>board[i][j]</code> 已被访问，即 <code>board[i][j] = &#39;\0&#39;</code> ，防止后续的 DFS 重复访问</li>
+<li>递归访问当前元素的上右下左方向的元素，使用 或 条件来连接，即找到一条路径就停止当前递归，不再做后续的 DFS，将搜索结果记录到 <code>hasPath</code>。</li>
+<li>还原当前矩阵元素：将 <code>board[i][j]</code> 还原至原始值，即 <code>word[k]</code></li>
+</ol>
+</li>
+<li><strong>返回值：</strong>返回结果布尔变量 <code>hasPath</code>，代表是否找到路径</li>
+</ul>
+<h4 id="复杂度分析"><a href="#复杂度分析" class="headerlink" title="复杂度分析"></a>复杂度分析</h4><ul>
+<li>时间复杂度：O(3<sup>K</sup> MN) 。每次选择有三个方向，最坏情况需要选择 K 次，即 3<sup>K </sup>次。又因为一共有 M * N 个起点，故时间复杂度为 O(3<sup>K</sup> MN) 。</li>
+<li>空就复杂度：O(K)。调用递归的过程中深度不超过 K ，所以调用函数累积使用的栈空间占用 O(K)，最坏的情况为 K &#x3D; M * N，即此时空间复杂度为 O(K)。</li>
+</ul>
+<h4 id="C"><a href="#C" class="headerlink" title="C++"></a>C++</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">// rows, cols 存储矩阵行数和列数</span></span><br><span class="line">    <span class="type">int</span> rows,cols;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">dfs</span><span class="params">(vector&lt;vector&lt;<span class="type">char</span>&gt;&gt;&amp; board, string word, <span class="type">int</span> i, <span class="type">int</span> j, <span class="type">int</span> k)</span></span>&#123;</span><br><span class="line">        <span class="comment">// 剪枝：碰到下标越界、当前元素与word[k]不同和当前元素已被遍历的情况则进行剪枝</span></span><br><span class="line">        <span class="keyword">if</span>(i &lt; <span class="number">0</span> || i &gt;= rows || j &lt; <span class="number">0</span> || j &gt;= cols || board[i][j] != word[k])</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        <span class="comment">// 查找成功剪枝</span></span><br><span class="line">        <span class="keyword">if</span>(k == word.<span class="built_in">size</span>() - <span class="number">1</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        <span class="comment">// 标记当前元素已被访问</span></span><br><span class="line">        board[i][j] = <span class="string">&#x27;\0&#x27;</span>;</span><br><span class="line">        <span class="comment">// 向上右下左四个方向访问</span></span><br><span class="line">        <span class="type">bool</span> hasPath = <span class="built_in">dfs</span>(board, word, i - <span class="number">1</span>, j, k + <span class="number">1</span>) || <span class="built_in">dfs</span>(board,</span><br><span class="line">         word, i, j + <span class="number">1</span>, k + <span class="number">1</span>) || <span class="built_in">dfs</span>(board, word, i + <span class="number">1</span>, j, k + <span class="number">1</span>) || <span class="built_in">dfs</span>(board, word, i, j - <span class="number">1</span>, k + <span class="number">1</span>);</span><br><span class="line">        <span class="comment">// 还原当前元素</span></span><br><span class="line">        board[i][j] = word[k];</span><br><span class="line">        <span class="keyword">return</span> hasPath;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">exist</span><span class="params">(vector&lt;vector&lt;<span class="type">char</span>&gt;&gt;&amp; board, string word)</span> </span>&#123;</span><br><span class="line">        rows = board.<span class="built_in">size</span>();</span><br><span class="line">        cols = board[<span class="number">0</span>].<span class="built_in">size</span>();</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt; rows; i++)</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> j = <span class="number">0</span>; j &lt; cols; j++)</span><br><span class="line">                <span class="comment">// 使用深度优先遍历+剪枝方法进行查找</span></span><br><span class="line">                <span class="keyword">if</span>(<span class="built_in">dfs</span>(board, word, i, j, <span class="number">0</span>))</span><br><span class="line">                    <span class="keyword">return</span> <span class="literal">true</span>;          </span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="本题考点"><a href="#本题考点" class="headerlink" title="本题考点"></a>本题考点</h3><ul>
+<li>考查对 <strong>回溯法</strong> 的理解</li>
+<li>考查对 <strong>深度优先遍历</strong> 和 <strong>剪枝法</strong> 的理解</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://cooyper.github.io">Cooyper</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://cooyper.github.io/post/9e68b9c9.html">https://cooyper.github.io/post/9e68b9c9.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://cooyper.github.io" target="_blank">Cooyper</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Leetcode/">Leetcode</a><a class="post-meta__tags" href="/tags/%E5%89%91%E6%8C%87offer/">剑指offer</a><a class="post-meta__tags" href="/tags/%E5%9B%9E%E6%BA%AF%E6%B3%95/">回溯法</a><a class="post-meta__tags" href="/tags/%E6%B7%B1%E5%BA%A6%E4%BC%98%E5%85%88%E9%81%8D%E5%8E%86/">深度优先遍历</a><a class="post-meta__tags" href="/tags/%E5%89%AA%E6%9E%9D%E6%B3%95/">剪枝法</a></div><div class="post_share"><div class="social-share" data-image="/img/post/blog012.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/post/3d94766b.html"><img class="next-cover" src="/img/post/blog011.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">剑指 Offer 11. 旋转数组的最小数字</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/post/8f676a7a.html" title="剑指 Offer 03. 数组中重复的数字"><img class="cover" src="/img/post/blog002.png" alt="cover"><div class="content is-center"><div class="date"><i class="fas fa-history fa-fw"></i> 2022-07-16</div><div class="title">剑指 Offer 03. 数组中重复的数字</div></div></a></div><div><a href="/post/69dc1f94.html" title="剑指 Offer 05. 替换空格"><img class="cover" src="/img/post/blog004.png" alt="cover"><div class="content is-center"><div class="date"><i class="fas fa-history fa-fw"></i> 2022-07-16</div><div class="title">剑指 Offer 05. 替换空格</div></div></a></div><div><a href="/post/c6ba40be.html" title="剑指 Offer 06. 从尾到头打印链表"><img class="cover" src="/img/post/blog005.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="fas fa-history fa-fw"></i> 2022-07-16</div><div class="title">剑指 Offer 06. 从尾到头打印链表</div></div></a></div><div><a href="/post/e910865e.html" title="剑指 Offer 07. 重建二叉树"><img class="cover" src="/img/post/blog006.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="fas fa-history fa-fw"></i> 2022-07-16</div><div class="title">剑指 Offer 07. 重建二叉树</div></div></a></div><div><a href="/post/da280a5b.html" title="剑指 Offer 04. 二维数组中的查找"><img class="cover" src="/img/post/blog003.png" alt="cover"><div class="content is-center"><div class="date"><i class="fas fa-history fa-fw"></i> 2022-07-16</div><div class="title">剑指 Offer 04. 二维数组中的查找</div></div></a></div><div><a href="/post/6120bdbd.html" title="剑指 Offer 08. 二叉树的下一个节点"><img class="cover" src="/img/post/blog007.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="fas fa-history fa-fw"></i> 2022-07-16</div><div class="title">剑指 Offer 08. 二叉树的下一个节点</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Cooyper</div><div class="author-info__description">For social creatures like us, staring up at a lonely night sky is a curse.</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">13</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">21</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Cooyper"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Cooyper" target="_blank" title="Github"><i class="fab fa-github"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%91%E6%8C%87-Offer-12-%E7%9F%A9%E9%98%B5%E4%B8%AD%E7%9A%84%E8%B7%AF%E5%BE%84"><span class="toc-number">1.</span> <span class="toc-text">剑指 Offer 12. 矩阵中的路径</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE"><span class="toc-number">1.1.</span> <span class="toc-text">题目</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%98%E8%A7%A3"><span class="toc-number">1.2.</span> <span class="toc-text">题解</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#DFS-%E8%A7%A3%E6%9E%90"><span class="toc-number">1.2.1.</span> <span class="toc-text">DFS 解析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%88%86%E6%9E%90"><span class="toc-number">1.2.2.</span> <span class="toc-text">复杂度分析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#C"><span class="toc-number">1.2.3.</span> <span class="toc-text">C++</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AC%E9%A2%98%E8%80%83%E7%82%B9"><span class="toc-number">1.3.</span> <span class="toc-text">本题考点</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/post/9e68b9c9.html" title="剑指 Offer 12. 矩阵中的路径"><img src="/img/post/blog012.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="剑指 Offer 12. 矩阵中的路径"/></a><div class="content"><a class="title" href="/post/9e68b9c9.html" title="剑指 Offer 12. 矩阵中的路径">剑指 Offer 12. 矩阵中的路径</a><time datetime="2022-07-16T13:02:58.000Z" title="发表于 2022-07-16 21:02:58">2022-07-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/3d94766b.html" title="剑指 Offer 11. 旋转数组的最小数字"><img src="/img/post/blog011.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="剑指 Offer 11. 旋转数组的最小数字"/></a><div class="content"><a class="title" href="/post/3d94766b.html" title="剑指 Offer 11. 旋转数组的最小数字">剑指 Offer 11. 旋转数组的最小数字</a><time datetime="2022-07-15T14:24:44.000Z" title="发表于 2022-07-15 22:24:44">2022-07-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/ee60b5f6.html" title="剑指 Offer 10- II. 青蛙跳台阶问题"><img src="/img/post/blog010.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="剑指 Offer 10- II. 青蛙跳台阶问题"/></a><div class="content"><a class="title" href="/post/ee60b5f6.html" title="剑指 Offer 10- II. 青蛙跳台阶问题">剑指 Offer 10- II. 青蛙跳台阶问题</a><time datetime="2022-07-10T09:28:49.000Z" title="发表于 2022-07-10 17:28:49">2022-07-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/7eea4da1.html" title="剑指 Offer 10- I. 斐波那契数列"><img src="/img/post/blog010.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="剑指 Offer 10- I. 斐波那契数列"/></a><div class="content"><a class="title" href="/post/7eea4da1.html" title="剑指 Offer 10- I. 斐波那契数列">剑指 Offer 10- I. 斐波那契数列</a><time datetime="2022-07-10T08:58:13.000Z" title="发表于 2022-07-10 16:58:13">2022-07-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/6fda8efa.html" title="剑指 Offer 09. 用两个栈实现队列"><img src="/img/post/blog009.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="剑指 Offer 09. 用两个栈实现队列"/></a><div class="content"><a class="title" href="/post/6fda8efa.html" title="剑指 Offer 09. 用两个栈实现队列">剑指 Offer 09. 用两个栈实现队列</a><time datetime="2022-07-10T08:55:02.000Z" title="发表于 2022-07-10 16:55:02">2022-07-10</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2022 By Cooyper</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><div class="js-pjax"></div><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
